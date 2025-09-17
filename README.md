@@ -10,13 +10,14 @@
 - Clone repository:
 
 ```bash
-git clone https://github.com/<username>/<ten-du-an>.git
+git clone https://github.com/TranKhanhToan-py/Automatic_Tool.git
 ```
--Run:
+- Run:
 ```bash
 cd automatic_tool
 python pyauto.py
 ```
+Khi chạy sẽ tự kiểm tra phiên bản , thư viện và cài chúng
 ## Yêu cầu:
 
 -Python version : 3.12.x
