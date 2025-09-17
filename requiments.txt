@@ -1,0 +1,10 @@
+speedtest-cli
+python-nmap
+colorama
+pygetwindow
+pyautogui
+keyboard
+comtypes
+pycaw
+pyinstaller
+art
