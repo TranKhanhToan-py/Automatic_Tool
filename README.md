@@ -1,30 +1,22 @@
-# Tên Dự Án
+# Automatic Tool
 
-- Mô tả ngắn gọn về dự án
-- Tính năng nổi bật
-- Môi trường hỗ trợ
+- Dự án đa số chạy bằng pyautogui và có nhiều chức năng (gồm hợp pháp và phạm pháp)
+- Môi trường hỗ trợ : Windows
 
 ---
 
-## Installation
+## Cài đặt
 
 - Clone repository:
 
 ```bash
 git clone https://github.com/<username>/<ten-du-an>.git
 ```
-Vào thư mục vừa clone và chạy:
+-Run:
 ```bash
-cd ten-du-an
-bash run.sh
-```
-
-
-## Usage
-```bash
+cd automatic_tool
 python pyauto.py
 ```
-## Requirements:
+## Yêu cầu:
 
-Python >= 3.10
-pip
+-Python version : 3.12.x
