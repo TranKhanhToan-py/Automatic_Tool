@@ -3,16 +3,17 @@ import platform
 from time import sleep
 import os
 print("CHECKING SYSTEM...")
+sleep(1)
 sy = platform.system()
 if platform.system() == "Windows":
     build = int(platform.version().split('.')[2])
     if build < 22000:
         pass
     elif build >= 22000:
-        print("Đây là Windows 11, dừng chương trình")
+        print(f"\033[0mĐây là Windows 11, dừng chương trình\033[0m")
         sys.exit(0)
 else:
-    print("Hệ điều hành của bạn không phải Windows")
+    print(f"\033[033mHệ điều hành của bạn không phải Windows\033[0m")
     sys.exit(0)
 print("OK")
 print("CHECKING VERSION...")
@@ -1039,5 +1040,6 @@ def main():
         
 if __name__ == "__main__":
     main()
+
 
 
