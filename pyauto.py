@@ -35,6 +35,7 @@ while True:
         from email.mime.multipart import MIMEMultipart
         import random
         import tkinter as tk
+        import shutil
         import subprocess
         import speedtest
         import re
@@ -639,6 +640,17 @@ def scan_ports(ip, start, end):
         print(Fore.RED + f"Lỗi khi quét {port_range}: {e}" + Fore.RESET)
 
 def chuc_nang_7():
+    print("CHECKING NMAP...")
+    sleep(1.3)
+    if shutil.which("nmap"):
+        print("Máy có Nmap, đang tải chương trình...")
+        sleep(2)
+    else:
+        print("Máy không có Nmap, vui lòng cài Nmap và chạy lại chương trình.")
+        sleep(0.4)
+        print(Fore.RED + "Đã dừng chương trình do không có Nmap" + Fore.RESET)
+        sleep(1.7)
+        return
     print(Fore.RED + "Cảnh báo : Tool này là tool bất hợp pháp, có thể gây ra các hậu quả không lường trước nếu không có sự đồng ý của chủ sở hữu mạng,\n           vui lòng sử dụng tool này khi được sự cho phép của bố mẹ hoặc chủ mạng." + Fore.RESET)
     sleep(1.5)
     while True:
@@ -931,7 +943,7 @@ def menu_and_input():
                 "4. Tự động tăng giảm âm lượng (nhập âm lượng muốn tăng hoặc giảm)",
                 "5. Đo tốc độ mạng",
                 "6. Spam Email",
-                "7. Quét IP, Port trong mạng LAN",
+                "7. Quét IP, Port trong mạng LAN (Cần Nmap)",
                 "8. Domain -> IP Address",
                 "9. Lấy các Password WiFi đã kết nối trước đó",
                 "10. Spam SMS (số điện thoại)",
@@ -1040,6 +1052,3 @@ def main():
         
 if __name__ == "__main__":
     main()
-
-
-
