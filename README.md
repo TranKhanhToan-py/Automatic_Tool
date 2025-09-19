@@ -14,7 +14,7 @@ git clone https://github.com/TranKhanhToan-py/Automatic_Tool.git
 ```
 - Run:
 ```bash
-cd automatic_tool
+cd Automatic_Tool
 python pyauto.py
 ```
 Khi chạy sẽ tự kiểm tra phiên bản , thư viện và cài chúng
