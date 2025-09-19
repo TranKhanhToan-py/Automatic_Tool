@@ -927,101 +927,112 @@ def chuc_nang_12():
         return
 
 def menu_and_input():
-    da_chay_chuc_nang_0 = False
     try:
-        while True:
-            os.system("cls")
-            ve_chu()
-            width = 110
-            print(Fore.BLUE + "\nCác tính năng trong chương trình lần này:" + Fore.RESET)
-            print(Fore.BLUE + "=" * width + Fore.RESET)
-            items = [
-                "0. Info thằng Tồn Loàn",
-                "1. Auto click (trái / phải)",
-                "2. Ghi một nội dung bất kỳ trong ứng dụng Notepad",
-                "3. Mở RickRoll =))",
-                "4. Tự động tăng giảm âm lượng (nhập âm lượng muốn tăng hoặc giảm)",
-                "5. Đo tốc độ mạng",
-                "6. Spam Email",
-                "7. Quét IP, Port trong mạng LAN (Cần Nmap)",
-                "8. Domain -> IP Address",
-                "9. Lấy các Password WiFi đã kết nối trước đó",
-                "10. Spam SMS (số điện thoại)",
-                "11. Ransomware (troll)",
-                "12. tạo chữ ASCII art",
-                "13. Chương trình đang được update thêm, khi ra bản mới Tồn Loàn sẽ thông báo...",
-                "99. Exit"
-            ]
-            for item in items:
-                line = f"|| {item}"
-                print(Fore.BLUE + line.ljust(width-2) + "||" + Fore.RESET)
-            print(Fore.BLUE + "=" * width + Fore.RESET)
-            if da_chay_chuc_nang_0:
-                print(Fore.YELLOW + "Info Page : https://trankhanhtoan-py.github.io/info2" + Fore.RESET)
-            try:
-                chuc_nang = int(input("Nhập chức năng (số): "))
-                if chuc_nang == 0:
-                    chuc_nang_0()
-                    da_chay_chuc_nang_0 = True
-                elif chuc_nang == 1:
-                    chuc_nang_1()
-                elif chuc_nang == 2:
-                    chuc_nang_2()
-                elif chuc_nang == 3:
-                    chuc_nang_3()
-                elif chuc_nang == 4:
-                    chuc_nang_4()
-                elif chuc_nang == 5:
-                    chuc_nang_5()
-                elif chuc_nang == 6:
-                    print(Fore.RED + "Cảnh báo : Nhấn Ctrl + C để dừng chương trình\n           Khi spam email có thể bị mất kiểm soát dẫn đến không thể dừng được, vui lòng đợi chương trình dừng sau khi nhấn Ctrl + C hoặc đóng terminal\n           Cần có file acc.txt nằm cùng thư mục file chạy để lấy email và app password, các accounts được viết theo {email}|{app_password}\n           Tool hơi chậm do phải xử lý thông tin, vui lòng chờ." + Fore.RESET)
-                    sleep(2)
-                    while True:
-                        try:
-                            TARGET = input("Nhập email người nhận: ").strip()
-                            while True:
-                                try:
-                                    targ = int(input("Nhập số lượng email muốn gửi (VD : 300, không quá 600 để không bị time out, 0 để nhập lại email): "))
-                                    if targ == 0:
-                                        TARGET = input("Nhập email người nhận: ").strip()
-                                        continue
-                                    elif targ < 0:
-                                        print("Số lượng không hợp lệ.")
-                                        continue
-                                    else:
-                                        chuc_nang_6(TARGET, targ)
-                                        break
-                                except ValueError:
-                                    print("Vui lòng nhập số nguyên hợp lệ.")
-                        except KeyboardInterrupt:
-                            print(Fore.RED + "\nĐã dừng chương trình bởi người dùng" + Fore.RESET)
+        da_chay_chuc_nang_0 = False
+        try:
+            while True:
+                os.system("cls")
+                ve_chu()
+                width = 110
+                print(Fore.BLUE + "\nCác tính năng trong chương trình lần này:" + Fore.RESET)
+                print(Fore.BLUE + "=" * width + Fore.RESET)
+                items = [
+                    "0. Info thằng Tồn Loàn",
+                    "=" * 105,
+                    "1. Auto click (trái / phải)",
+                    "2. Ghi một nội dung bất kỳ trong ứng dụng Notepad",
+                    "3. Mở RickRoll =))",
+                    "4. Tự động tăng giảm âm lượng (nhập âm lượng muốn tăng hoặc giảm)",
+                    "5. Đo tốc độ mạng",
+                    "6. Spam Email",
+                    "7. Quét IP, Port trong mạng LAN (Cần Nmap)",
+                    "8. Domain -> IP Address",
+                    "9. Lấy các Password WiFi đã kết nối trước đó",
+                    "10. Spam SMS (số điện thoại)",
+                    "11. Ransomware (troll)",
+                    "12. tạo chữ ASCII art",
+                    "13. Chương trình đang được update thêm, khi ra bản mới Tồn Loàn sẽ thông báo...",
+                    "=" * 105,
+                    "99. Exit"
+                ]
+                for item in items:
+                    line = f"|| {item}"
+                    print(Fore.BLUE + line.ljust(width-2) + "||" + Fore.RESET)
+                print(Fore.BLUE + "=" * width + Fore.RESET)
+                if da_chay_chuc_nang_0:
+                    print(Fore.YELLOW + "Info Page : https://trankhanhtoan-py.github.io/info2" + Fore.RESET)
+                try:
+                    chuc_nang = int(input("Nhập chức năng (số): "))
+                    if chuc_nang == 0:
+                        chuc_nang_0()
+                        da_chay_chuc_nang_0 = True
+                    elif chuc_nang == 1:
+                        chuc_nang_1()
+                    elif chuc_nang == 2:
+                        chuc_nang_2()
+                    elif chuc_nang == 3:
+                        chuc_nang_3()
+                    elif chuc_nang == 4:
+                        chuc_nang_4()
+                    elif chuc_nang == 5:
+                        chuc_nang_5()
+                    elif chuc_nang == 6:
+                        print(Fore.RED + "Cảnh báo : Nhấn Ctrl + C để dừng chương trình\n           Khi spam email có thể bị mất kiểm soát dẫn đến không thể dừng được, vui lòng đợi chương trình dừng sau khi nhấn Ctrl + C hoặc đóng terminal\n           Cần có file acc.txt nằm cùng thư mục file chạy để lấy email và app password, các accounts được viết theo {email}|{app_password}\n           Tool hơi chậm do phải xử lý thông tin, vui lòng chờ." + Fore.RESET)
+                        sleep(2)
+                        while True:
+                            try:
+                                TARGET = input("Nhập email người nhận: ").strip()
+                                while True:
+                                    try:
+                                        targ = int(input("Nhập số lượng email muốn gửi (VD : 300, không quá 600 để không bị time out, 0 để nhập lại email): "))
+                                        if targ == 0:
+                                            TARGET = input("Nhập email người nhận: ").strip()
+                                            continue
+                                        elif targ < 0:
+                                            print("Số lượng không hợp lệ.")
+                                            continue
+                                        else:
+                                            chuc_nang_6(TARGET, targ)
+                                            break
+                                    except ValueError:
+                                        print("Vui lòng nhập số nguyên hợp lệ.")
+                            except KeyboardInterrupt:
+                                print(Fore.RED + "\nĐã dừng chương trình bởi người dùng" + Fore.RESET)
+                                sleep(2)
+                                break
+                    elif chuc_nang == 7:
+                        chuc_nang_7()
+                    elif chuc_nang == 8:
+                        chuc_nang_8()
+                    elif chuc_nang == 9:
+                        chuc_nang_9()
+                    elif chuc_nang == 10:
+                        chuc_nang_10()
+                    elif chuc_nang == 11:
+                        chuc_nang_11()
+                    elif chuc_nang == 12:
+                        chuc_nang_12()
+                    elif chuc_nang == 13:
+                        print(Fore.YELLOW + "Chức năng này không hoạt động." + Fore.RESET)
+                        sleep(5)
+                    elif chuc_nang == 99:
+                        rem = input("Bạn có muốn gỡ tất cả các gói vừa cài không? (y / bấm gì cũng được rồi enter) : ").strip().lower()
+                        if rem == "y":
+                            print("CHECKING LIBRARY...")
                             sleep(2)
-                            break
-                elif chuc_nang == 7:
-                    chuc_nang_7()
-                elif chuc_nang == 8:
-                    chuc_nang_8()
-                elif chuc_nang == 9:
-                    chuc_nang_9()
-                elif chuc_nang == 10:
-                    chuc_nang_10()
-                elif chuc_nang == 11:
-                    chuc_nang_11()
-                elif chuc_nang == 12:
-                    chuc_nang_12()
-                elif chuc_nang == 13:
-                    print(Fore.YELLOW + "Chức năng này không hoạt động." + Fore.RESET)
-                    sleep(5)
-                elif chuc_nang == 99:
-                    print(Fore.RED + "Đã thoát chương trình" + Fore.RESET)
-                    sys.exit(0)
-                else:
-                    print(Fore.YELLOW + "Hãy chọn chức năng có trong menu" + Fore.RESET)
+                            os.system("pip uninstall -r requiments.txt -y")
+                        else:
+                            pass
+                        raise SystemExit(Fore.RED + "\nĐã thoát chương trình." + Fore.RESET)
+                    else:
+                        print(Fore.YELLOW + "Hãy chọn chức năng có trong menu" + Fore.RESET)
+                        sleep(2.3)
+                except ValueError:
+                    print(Fore.YELLOW + "Giá trị nhập phải là số, vui lòng nhập lại" + Fore.RESET)
                     sleep(2.3)
-            except ValueError:
-                print(Fore.YELLOW + "Giá trị nhập phải là số, vui lòng nhập lại" + Fore.RESET)
-                sleep(2.3)
-    except KeyboardInterrupt:
+        except KeyboardInterrupt:
+            menu_and_input()
+    except EOFError:
         menu_and_input()
 
 def giao_dien():
