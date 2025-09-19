@@ -39,6 +39,8 @@ while True:
         from threading import Lock
         import unicodedata
         from art import text2art
+        print("OK")
+        sleep(0.3)
         break
     except ModuleNotFoundError:
         sleep(2.4)
@@ -776,7 +778,7 @@ def chuc_nang_9():
 
 def chuc_nang_10():
     try:
-        print(Fore.RED + "Cảnh báo: Tool này là tool hợp pháp, vui lòng sử dụng đúng mục đích\n           Tool này có thể bị mất kiểm soát, nếu muốn dừng chương trình thì hãy đợi có chữ THÀNH CÔNG và nhấn Ctrl + C")
+        print(Fore.RED + "Cảnh báo: Tool này là tool bất hợp pháp, vui lòng sử dụng đúng mục đích\n           Tool này có thể bị mất kiểm soát, nếu muốn dừng chương trình thì hãy đợi có chữ THÀNH CÔNG và nhấn Ctrl + C")
         sleep(1.2)
         while True:
             ok3 = input(Fore.YELLOW + "Bạn có muốn thực hiện thao tác không? (y / n) : " + Fore.RESET).strip().lower()
@@ -786,7 +788,7 @@ def chuc_nang_10():
                     for i in range(3):
                         print(".", end = "", flush = True)
                         sleep(1)
-                    from spamsms import man
+                    from smsbaro import man
                     man()
                 except KeyboardInterrupt:
                     print(Fore.RED + "\nĐã dừng chương trình bởi người dùng" + Fore.RESET)
@@ -902,7 +904,7 @@ def menu_and_input():
         while True:
             os.system("cls")
             ve_chu()
-            width = 120
+            width = 110
             print(Fore.BLUE + "\nCác tính năng trong chương trình lần này:" + Fore.RESET)
             print(Fore.BLUE + "=" * width + Fore.RESET)
             items = [
