@@ -950,8 +950,7 @@ def menu_and_input():
                 "11. Ransomware (troll)",
                 "12. tạo chữ ASCII art",
                 "13. Chương trình đang được update thêm, khi ra bản mới Tồn Loàn sẽ thông báo...",
-                "Ctrl + C. Thoát chương trình",
-                "Nếu Ctrl + C mà chương trình không dừng thì vui lòng nhấn tổ hợp phím một lần nữa sau đó nhấn Enter"
+                "99. Exit"
             ]
             for item in items:
                 line = f"|| {item}"
@@ -1013,6 +1012,9 @@ def menu_and_input():
                 elif chuc_nang == 13:
                     print(Fore.YELLOW + "Chức năng này không hoạt động." + Fore.RESET)
                     sleep(5)
+                elif chuc_nang == 99:
+                    print(Fore.RED + "Đã thoát chương trình" + Fore.RESET)
+                    sys.exit(0)
                 else:
                     print(Fore.YELLOW + "Hãy chọn chức năng có trong menu" + Fore.RESET)
                     sleep(2.3)
@@ -1020,8 +1022,7 @@ def menu_and_input():
                 print(Fore.YELLOW + "Giá trị nhập phải là số, vui lòng nhập lại" + Fore.RESET)
                 sleep(2.3)
     except KeyboardInterrupt:
-        print(Fore.RED + "\nĐã dừng chương trình" + Fore.RESET)
-        sys.exit()
+        menu_and_input()
 
 def giao_dien():
     ve_chu()
