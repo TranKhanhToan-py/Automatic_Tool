@@ -206,10 +206,10 @@ def chuc_nang_1():
     print(Fore.RED + "Cảnh báo: Để chương trình hoạt động, vui lòng không để chương trình autoclick vào terminal hoặc shell, hãy chuyển sang tab khác để có trải nghiệm tốt.\nNhập 0 vào bất kì input nào để di chuyển tới menu." + Fore.RESET)
     while True:
         sleep(2)
-        rl = input("Bạn muốn click chuột trái hay chuột phải? (l / r) : ").strip().lower()
+        rl = input("Bạn muốn click chuột trái hay chuột phải? (l / r / 0 để thoát) : ").strip().lower()
         if rl == "l":
             try:
-                click = int(input("Nhập số lần click : "))
+                click = int(input("Nhập số lần click (0 để thoát): "))
                 if click == 0:
                     print(Fore.RED + "Đã dừng chương trình do giá trị nhập bằng 0" + Fore.RESET)
                     sleep(3)
@@ -227,7 +227,7 @@ def chuc_nang_1():
                 return
         elif rl == "r":
             try:
-                click = int(input("Nhập số lần click : "))
+                click = int(input("Nhập số lần click (0 để thoát): "))
                 if click == 0:
                     print(Fore.RED + "Đã dừng chương trình do giá trị nhập bằng 0" + Fore.RESET)
                     sleep(2)
