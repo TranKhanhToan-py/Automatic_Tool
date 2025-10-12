@@ -1,3 +1,5 @@
+moviepy
+pygame
 speedtest-cli
 python-nmap
 colorama
