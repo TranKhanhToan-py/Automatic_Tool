@@ -2,6 +2,28 @@ import sys
 import platform
 from time import sleep
 import os
+import subprocess
+
+def check_venv_module():
+    try:
+        subprocess.run(
+            [sys.executable, "-m", "venv", "--help"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=True
+        )
+        return True
+    except subprocess.CalledProcessError:
+        return True
+    except Exception:
+        return False
+
+def check_in_venv():
+    return (hasattr(sys, 'real_prefix') or 
+            (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
+
+def download_lib():
+    os.system("pip install -r requirements.txt")
 
 def get_linux_distribution():
     try:
@@ -93,6 +115,11 @@ items = [
             "99. Exit"
                 ]
 
+print_lock = Lock()
+pyautogui.FAILSAFE = True
+init(autoreset = True)
+version = "1.6" # neu co chinh sua noi dung vui long nhap version
+
 print("CHECKING SYSTEM...")
 sleep(1)
 sy = platform.system()
@@ -112,8 +139,6 @@ if sy == "Windows":
         print("OK...")
         sleep(0.3)
         print("CHECKING LIBRARY...")
-        def download_lib():
-            os.system("pip install -r requirements.txt")
         while True:
             try:
                 from moviepy import VideoFileClip
@@ -126,7 +151,6 @@ if sy == "Windows":
                 import random
                 import tkinter as tk
                 import shutil
-                import subprocess
                 import speedtest
                 import re
                 import signal
@@ -154,10 +178,6 @@ if sy == "Windows":
                 print("DOWNLOAD FAIL, RETRYING...")
                 sleep(2.4)
                 download_lib()
-        print_lock = Lock()
-        pyautogui.FAILSAFE = True
-        init(autoreset = True)
-        version = "1.6" # neu co chinh sua noi dung vui long nhap version
 
         def find_app(app):
             windows = gw.getWindowsWithTitle(app)
@@ -940,9 +960,7 @@ if sy == "Windows":
                 return
 
         def khong_dau(text: str) -> str:
-            # tách chữ + dấu
             normalized = unicodedata.normalize('NFD', text)
-            # bỏ các dấu thanh (category Mn), nhưng giữ chữ cái
             no_tone = ''.join(
                 c for c in normalized
                 if unicodedata.category(c) != 'Mn'
@@ -977,7 +995,7 @@ if sy == "Windows":
             print(Fore.RED + "Cảnh báo : File audio của bạn bắt buộc phải không có dấu và không có khoảng cách\n           Nhấn Ctrl + C để dừng")
             warnings.filterwarnings("ignore", category=UserWarning)
             os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
-            file = input("Nhập đường dẫn (không ghi gì để thoát chương trình): ")
+            file = input("Nhập đầy đủ đường dẫn file (không ghi gì để thoát chương trình): ")
             if file == "":
                 print(Fore.RED + "Đã thoát chương trình" + Fore.RESET)
                 sleep(0.8)
@@ -1017,6 +1035,8 @@ if sy == "Windows":
                             break
             except FileNotFoundError as e:
                 print(e)
+                sleep(2)
+                return
             except pygame.error as e:
                 print(Fore.YELLOW + f"Lỗi pygame: {e}\nVui lòng thử lại sau" + Fore.RESET)
                 sleep(2)
@@ -1036,7 +1056,7 @@ if sy == "Windows":
             while True:
                 try:
                     ten = "Audio.mp3"
-                    video_file = input("Nhập file Video của bạn (không ghi gì để thoát) : ")
+                    video_file = input("Nhập đầy đủ file Video của bạn (không ghi gì để thoát) : ")
                     if video_file == "":
                         print(Fore.RED + "Đã thoát chương trình" + Fore.RESET)
                         sleep(0.8)
@@ -1221,6 +1241,71 @@ elif sy == "Linux":
         sleep(0.4)
         print("OK")
         sleep(0.8)
-        print("Chương trình đang được bảo trì, vui lòng chờ...")
+        print("CHECKING LIBRARY AND MODULES...")
+        sleep(1)
+        venv_available = check_venv_module()
+        in_venv = check_in_venv()
+        print("Trạng thái kiểm tra Python venv:")
+        print(f"- Module 'venv' có sẵn: {'Có' if venv_available else 'Không'}")
+        print(f"- Đang ở trong môi trường ảo: {'Có' if in_venv else 'Không'}")
+        if not venv_available:
+            while True:
+                dow = input("Chương trình của bạn không có venv, bạn có muốn chương trình cài venv không? (y / n) : ").strip().lower()
+                if dow == "y":
+                    os.system("sudo apt install python3-venv")
+                    print("\nĐã cài xong venv, đang chuẩn bị tạo môi trường ảo...")
+                    sleep(0.6)
+                    os.system("python3 -m venv venv")
+                    print("Đã tạo xong môi trường ảo, đang kích hoạt môi trường ảo...")
+                    sleep(0.6)
+                    os.system("source venv/bin/activate")
+                    print("Đã kích hoạt venv, kiểm tra thư viện...")
+                    sleep(1)
+                    break
+                elif dow == "n":
+                    print("Vui lòng cài venv để chạy chương trình. TẠM BIỆT!")
+                    sys.exit(0)
+                else:
+                    print("Vui lòng nhập đúng giá trị chương trình đưa ra")
+                    sleep(0.8)
+        while True:
+            try:
+                from moviepy import VideoFileClip
+                import pygame
+                import warnings
+                from datetime import datetime
+                import smtplib
+                from email.mime.text import MIMEText
+                from email.mime.multipart import MIMEMultipart
+                import random
+                import tkinter as tk
+                import shutil
+                import speedtest
+                import re
+                import signal
+                import nmap
+                from colorama import Fore, Style, init
+                import pygetwindow as gw
+                import pyautogui
+                import msvcrt
+                import keyboard
+                import socket
+                import threading
+                import sys
+                import math
+                from ctypes import cast, POINTER
+                from comtypes import CLSCTX_ALL
+                from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+                from threading import Lock
+                import unicodedata
+                from art import text2art
+                print("OK")
+                sleep(0.3)
+                break
+            except ModuleNotFoundError:
+                sleep(2.4)
+                print("DOWNLOAD FAIL, RETRYING...")
+                sleep(2.4)
+                download_lib()
     else:
         print("Chương trình đang cập nhật, vui lòng chờ...")
