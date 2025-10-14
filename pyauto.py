@@ -1258,7 +1258,7 @@ elif sy == "Linux":
                     os.system("python3 -m venv venv")
                     print("Đã tạo xong môi trường ảo, đang kích hoạt môi trường ảo...")
                     sleep(0.6)
-                    os.system("source venv/bin/activate")
+                    os.system("venv/bin/python pyauto.py")
                     print("Đã kích hoạt venv, kiểm tra thư viện...")
                     sleep(1)
                     break
@@ -1300,8 +1300,8 @@ elif sy == "Linux":
                 import unicodedata
                 from art import text2art
                 print("OK")
-                sleep(0.3)
-                break
+                print("Chương trình đang được cập nhật , vui lòng chờ phiên bản mới nhất...")
+                sys.exit(0)
             except ModuleNotFoundError:
                 sleep(2.4)
                 print("DOWNLOAD FAIL, RETRYING...")
