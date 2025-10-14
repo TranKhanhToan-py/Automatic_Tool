@@ -3,7 +3,7 @@ import platform
 from time import sleep
 import os
 import subprocess
-
+__version__ = "1.6.0"
 def check_venv_module():
     try:
         subprocess.run(
@@ -118,7 +118,6 @@ items = [
 print_lock = Lock()
 pyautogui.FAILSAFE = True
 init(autoreset = True)
-version = "1.6" # neu co chinh sua noi dung vui long nhap version
 
 print("CHECKING SYSTEM...")
 sleep(1)
@@ -1200,7 +1199,7 @@ if sy == "Windows":
 
         def giao_dien():
             ve_chu()
-            print(Fore.GREEN + f"Tool by Trần Khánh Toàn - Ver {version}")
+            print(Fore.GREEN + f"Tool by Trần Khánh Toàn - Ver {__version__}")
             print(Fore.RED + "\nCảnh báo : Các tính năng trong đây bao gồm auto có thể bị mất kiểm soát.")
             print(Fore.YELLOW + "\nTip : Để thoát chương trình, hãy bấm Ctrl + C. Để thoát chương trình (auto), hãy di chuột lên phía trên cùng góc bên trái để dừng thẳng chương trình.")
             print("Sau khi đọc xong, nhấn Enter để vào Menu hoặc Ctrl + C để thoát...")
@@ -1309,3 +1308,4 @@ elif sy == "Linux":
                 download_lib()
     else:
         print("Chương trình đang cập nhật, vui lòng chờ...")
+
