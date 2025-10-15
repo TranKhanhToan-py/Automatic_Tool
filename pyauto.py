@@ -3,7 +3,61 @@ import platform
 from time import sleep
 import os
 import subprocess
-__version__ = "1.6.0"
+import zipfile
+import io
+__version__ = "1.2.0"
+while True:
+    try:
+        import requests
+        break
+    except ModuleNotFoundError:
+        os.system("pip install requests")
+GITHUB_REPO = "TranKhanhToan-py/Automatic_Tool"
+GITHUB_RAW_URL = f"https://raw.githubusercontent.com/{GITHUB_REPO}/main/pyauto.py"
+
+def check_and_update():
+    try:
+        print("Kiểm tra cập nhật từ GitHub...")
+        sleep(1)
+        resp = requests.get(GITHUB_RAW_URL, timeout=10)
+        if resp.status_code != 200:
+            print("Không thể tải file từ GitHub (status:", resp.status_code, ")")
+            sleep(1.3)
+            return
+        latest_code = resp.text
+        latest_version = None
+        for line in latest_code.splitlines():
+            if line.startswith("__version__"):
+                parts = line.split("=", 1)
+                if len(parts) == 2:
+                    latest_version = parts[1].strip().strip('"').strip("'")
+                break
+
+        if not latest_version:
+            print("Không tìm thấy dòng __version__ trong bản mới.")
+            sleep(1.3)
+            return
+
+        if latest_version != __version__:
+            print(f"Có bản mới: {latest_version} (hiện tại: {__version__})")
+            ans = input("Bạn có muốn cập nhật không? (y/n): ").strip().lower()
+            if ans == "y":
+                script_path = os.path.abspath(sys.argv[0])
+                try:
+                    with open(script_path, "w", encoding="utf-8") as f:
+                        f.write(latest_code)
+                    print("Đã cập nhật thành công. Vui lòng khởi động lại chương trình.")
+                    sys.exit(0)
+                except Exception as e:
+                    print("Lỗi khi ghi đè file:", e)
+                    sleep(3)
+        else:
+            print("Bạn đang ở phiên bản mới nhất, không cần cập nhật.")
+            sleep(1)
+    except Exception as e:
+        print("Lỗi khi kiểm tra cập nhật:", e)
+        sleep(2)
+check_and_update()
 def check_venv_module():
     try:
         subprocess.run(
@@ -116,7 +170,7 @@ items = [
                 ]
 
 
-print("CHECKING SYSTEM...")
+print("\nCHECKING SYSTEM...")
 sleep(1)
 sy = platform.system()
 if sy == "Windows":
@@ -174,7 +228,6 @@ if sy == "Windows":
                 print("DOWNLOAD FAIL, RETRYING...")
                 sleep(2.4)
                 download_lib()
-
         print_lock = Lock()
         pyautogui.FAILSAFE = True
         init(autoreset = True)
@@ -1309,6 +1362,3 @@ elif sy == "Linux":
                 download_lib()
     else:
         print("Chương trình đang cập nhật, vui lòng chờ...")
-
-
-
