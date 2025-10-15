@@ -175,9 +175,9 @@ if sy == "Windows":
                 sleep(2.4)
                 download_lib()
 
-print_lock = Lock()
-pyautogui.FAILSAFE = True
-init(autoreset = True)
+        print_lock = Lock()
+        pyautogui.FAILSAFE = True
+        init(autoreset = True)
 
         def find_app(app):
             windows = gw.getWindowsWithTitle(app)
@@ -1309,5 +1309,6 @@ elif sy == "Linux":
                 download_lib()
     else:
         print("Chương trình đang cập nhật, vui lòng chờ...")
+
 
 
