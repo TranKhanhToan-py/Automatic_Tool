@@ -1295,6 +1295,15 @@ elif sy == "Linux":
         sleep(0.4)
         print("OK")
         sleep(0.8)
+        print("CHECKING VERSION...")
+        sleep(3)
+        version = f"{sys.version_info.major}.{sys.version_info.minor}"
+        if not version == "3.12":
+            print("\033[033mPhiên bản Python của bạn hiện tại không phải là python 3.12, vui lòng tải Python 3.12.x để sử dụng tool\033[0m")
+            sys.exit(0)
+        print("Python 3.12")
+        print("OK...")
+        sleep(0.3)
         print("CHECKING LIBRARY AND MODULES...")
         sleep(1)
         venv_available = check_venv_module()
