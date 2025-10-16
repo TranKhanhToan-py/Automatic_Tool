@@ -5,7 +5,7 @@ import os
 import subprocess
 import zipfile
 import io
-__version__ = "1.2.0"
+__version__ = "1.0.0"
 while True:
     try:
         import requests
@@ -146,6 +146,7 @@ chu = r"""
         |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|                |        |_|   \___/ /_/   \_\|_| \_|
                                                                  |
         """
+chu = "\n".join(line for line in chu.splitlines() if line.strip())
 
 items = [
             "0. Info thằng Tồn Loàn",
