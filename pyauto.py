@@ -3,9 +3,9 @@ import platform
 from time import sleep
 import os
 import subprocess
-import zipfile
 import io
-__version__ = "1.0.0"
+PROGRESS_EVERY = 1000
+__version__ = "1.0.9"
 while True:
     try:
         import requests
@@ -95,6 +95,26 @@ def get_linux_distribution():
         except FileNotFoundError:
             return "Unable to determine Linux distribution. /etc/os-release not found."
         
+def find_tool(t):
+    try:
+        if t == "nmap":
+            path = shutil.which(t)
+            print(Fore.YELLOW + f"Đang tìm kiếm {t} trong PATH" + Fore.RESET)
+            sleep(2)
+            if path:
+                return path
+            print(Fore.YELLOW + f"Không tìm thấy {t} trong PATH, đang quét toàn bộ ổ C, hãy kiên nhẫn... " + Fore.RESET)
+            for root, dirs, files in os.walk("C:\\"):
+                if "nmap.exe" in files:
+                    return os.path.join(root, "nmap.exe")
+            return None
+    except Exception as e:
+        return Fore.RED + f"Lỗi khi tìm kiếm công cụ {t}: {e}" + Fore.RESET
+    except KeyboardInterrupt:
+        return Fore.RED + "\nĐã dừng chương trình bởi người dùng" + Fore.RESET
+        sleep(0.8)
+        menu_and_input()
+
 MESSAGES = [
             "Life in the city is full of activity. Early in the morning, people leave their houses in the manner ants do when their nest is broken. Then the streets are full of traffic. Shops and offices open, students are eager to go to their school and the day’s work begins. Many sightseers and tourists also visit many tourist attractions in the city, and businessmen from many parts of the world also come to conduct business transactions. In the evening, the offices and day schools begin to close, many of the shops are too close. There is often a traffic jam at this time because everyone wants to get home quickly. The city is described as a place of constant activity.",
             "Some people like to live downtown because of its facilities, but I prefer to live in the countryside for many reasons. First of all, life in the city is quite packed with hustle and bustle. It is really tiring and upsetting to wait for hours because of traffic jams. Second, pollution from dust and noise can cause human health to decline. Thirdly, I do not feel safe to live in the city because the criminal situations are rising. I love the silence, I love fresh air, so I love to live in the countryside.",
@@ -165,11 +185,11 @@ items = [
             "12. Tạo chữ ASCII art",
             "13. Nghe file mp3",
             "14. File mp4 -> mp3",
-            "15. Chương trình đang được update thêm, khi ra bản mới Tồn Loàn sẽ thông báo...",
+            "15. Giải nén file zip",
+            "16. Chương trình đang được update thêm, khi ra bản mới Tồn Loàn sẽ thông báo...",
             "=" * 105,
             "99. Exit"
                 ]
-
 
 print("\nCHECKING SYSTEM...")
 sleep(1)
@@ -204,6 +224,8 @@ if sy == "Windows":
                 import shutil
                 import speedtest
                 import re
+                import pyzipper
+                from zipfile import BadZipFile
                 import signal
                 import nmap
                 from colorama import Fore, Style, init
@@ -751,9 +773,10 @@ if sy == "Windows":
         def chuc_nang_7():
             print("CHECKING NMAP...")
             sleep(1.3)
-            if shutil.which("nmap"):
+            nmap = find_tool("nmap")
+            if nmap:
                 print("Máy có Nmap, đang tải chương trình...")
-                sleep(2)
+                sleep(0.8)
             else:
                 print("Máy không có Nmap, vui lòng cài Nmap và chạy lại chương trình.")
                 sleep(0.4)
@@ -1151,7 +1174,144 @@ if sy == "Windows":
                     print(Fore.YELLOW + f"Lỗi trong quá trình ghi : {e}\nVui lòng thử lại chương trình" + Fore.RESET)
                     sleep(3)
                     return
+        
+        def ensure_dir(path):
+            os.makedirs(path, exist_ok=True)
 
+        def try_extract_all(zippath, extract_to, pwd_bytes=None):
+            try:
+                with pyzipper.AESZipFile(zippath) as zf:
+                    if pwd_bytes is not None:
+                        zf.pwd = pwd_bytes
+                    zf.extractall(path=extract_to)
+                return True, None
+            except BadZipFile as e:
+                return False, f"BadZipFile: {e}"
+            except RuntimeError as e:
+                return False, f"RuntimeError: {e}"
+            except Exception as e:
+                return False, f"OtherError: {e}"
+            
+        def list_zip_file(zippath):
+            try:
+                print(Fore.YELLOW + "Các file zip:\n" + Fore.RESET)
+                with pyzipper.AESZipFile(zippath) as zf:
+                    return zf.namelist()
+            except Exception as e:
+                print(Fore.RED + "Đã có lỗi xảy ra, vui lòng thử lại." + Fore.RESET)
+                sleep(1)
+                menu_and_input()
+            
+        def read_pw_file_generator(pw_file):
+            with open(pw_file, "r", encoding="utf-8", errors="ignore") as f:
+                for line in f:
+                    pw = line.rstrip("\n\r")
+                    if pw:
+                        yield pw
+                        
+        def interactive_inputs():
+            try:
+                while True:
+                    zippath = input(Fore.YELLOW + "\nĐường dẫn file .zip: " + Fore.RESET).strip()
+                    zippath = rf"{zippath}"
+                    if not zippath:
+                        print(Fore.RED + "Vui lòng nhập đường dẫn file .zip." + Fore.RESET)
+                        continue
+                    if not os.path.isfile(zippath):
+                        print(f"File zip không tồn tại: {zippath}")
+                        continue
+                    break
+                while True:
+                    pw_file = input(Fore.YELLOW  + "Đường dẫn file mật khẩu: " + Fore.RESET).strip()
+                    if not pw_file:
+                        pw_file = None
+                        break
+                    if not os.path.isfile(pw_file):
+                        print(f"File mật khẩu không tồn tại: {pw_file}")
+                        continue
+                    break
+                while True:
+                    outdir = input(Fore.YELLOW + "Thư mục xuất (Enter để mặc định): " + Fore.RESET).strip()
+                    if not outdir:
+                        outdir = zippath + "_extracted"
+                    outdir = os.path.expanduser(outdir)
+                    try:
+                        ensure_dir(outdir)
+                    except Exception as e:
+                        print(f"Không thể tạo/đi vào thư mục: {e}")
+                        continue
+                    break
+                return zippath, pw_file, outdir
+            except KeyboardInterrupt:
+                print(Fore.RED + "\nĐã dừng chương trình bởi người dùng." + Fore.RESET)
+                sleep(0.8)
+                menu_and_input()
+        def extract_zip_interactive():
+            cwd = os.getcwd()
+            cmd = r'dir /s /b | findstr /i "\.zip$"'
+            result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+            files = result.stdout.strip().splitlines()
+            if not files:
+                print(Fore.RED + "Không tìm thấy file .zip nào trong thư mục hiện tại.")
+                sleep(1)
+            else:
+                print(Fore.BLUE + f"Các file nén trong {cwd}:\n")
+                for i, f in enumerate(files, start=1):
+                    print(Fore.YELLOW + f"{i}. {f}")
+            print("\n")
+            zippath, pw_file, outdir = interactive_inputs()
+            print(Fore.CYAN + "\n==================================================================" + Fore.RESET)
+            print(Fore.CYAN +  f"|| Bắt đầu xử lý:                                                 " + Fore.RESET)
+            print(Fore.CYAN +  f"||  - ZIP: {zippath}                                              " + Fore.RESET)
+            print(Fore.CYAN +  f"||  - PW file: {pw_file or '(không cung cấp)'}                    " + Fore.RESET)
+            print(Fore.CYAN +  f"||  - Output: {outdir}                                            " + Fore.RESET)
+            print(Fore.CYAN + "==================================================================" + Fore.RESET)
+            ok, err = try_extract_all(zippath, outdir, pwd_bytes=None)
+            if ok:
+                sleep(3)
+                print(Fore.GREEN + f"Giải nén thành công vào {outdir}." + Fore.RESET)
+                sleep(0.8)
+                chuc_nang_15()
+            if not pw_file:
+                print(Fore.YELLOW + f"Giải nén thất bại không mật khẩu. Lỗi: {err}" + Fore.RESET)
+                sleep(2)
+                chuc_nang_15()
+            sleep(2)
+            cr = input(Fore.YELLOW + "\nFile đã được mã hóa, bạn có muốn crack nó không? (y / n) : " + Fore.RESET).strip().lower()
+            if cr == "n":
+                print(Fore.GREEN + "Lựa chọn : Không" + Fore.RESET)
+                sleep(0.8)
+                print(Fore.YELLOW + "Lỗi : Không thể giải nén file vì đã được mã hóa." + Fore.RESET)
+                sleep(1)
+                print(Fore.RED + "Đã thoát chương trình." + Fore.RESET)
+                sleep(0.8)
+                chuc_nang_15()
+            gen = read_pw_file_generator(pw_file)
+            for idx, pw in enumerate(gen, start=1):
+                try:
+                    pwd_bytes = pw.encode("utf-8")
+                    print(Fore.CYAN + f"[{idx}] Đang thử mật khẩu: {pw}" + Fore.RESET)
+                    sleep(0.05)
+                except Exception:
+                    pwd_bytes = None
+                ok, err = try_extract_all(zippath, outdir, pwd_bytes=pwd_bytes)
+                if ok:
+                    print(Fore.GREEN + f"\nGiải nén thành công. Mật khẩu hợp lệ: {pw}" + Fore.RESET)
+                    chuc_nang_15()
+            print("Không tìm được mật khẩu trong file mật khẩu đã cung cấp.")
+            chuc_nang_15()
+
+        def chuc_nang_15():
+            print(Fore.RED + "Cảnh báo : File nén của bạn bắt buộc phải không có dấu và không có khoảng cách\n           Nhấn Ctrl + C để dừng" + Fore.RESET)
+            sleep(0.8)
+            try:
+                exit_code = extract_zip_interactive()
+                sys.exit(exit_code)
+            except KeyboardInterrupt:
+                print(Fore.RED + "\nĐã dừng chương trình bởi người dùng." + Fore.RESET)
+                sleep(0.8)
+                return
+                
         def menu_and_input():
             try:
                 da_chay_chuc_nang_0 = False
@@ -1226,6 +1386,8 @@ if sy == "Windows":
                             elif chuc_nang == 14:
                                 chuc_nang_14()
                             elif chuc_nang == 15:
+                                chuc_nang_15()
+                            elif chuc_nang == 16:
                                 print(Fore.YELLOW + "Chức năng này không hoạt động." + Fore.RESET)
                                 sleep(5)
                             elif chuc_nang == 99:
