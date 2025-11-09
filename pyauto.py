@@ -191,12 +191,54 @@ items = [
             "99. Exit"
                 ]
 
+print("CHECKING LIBRARY...")
+while True:
+    try:
+        from moviepy import VideoFileClip
+        import pygame
+        import warnings
+        from datetime import datetime
+        import smtplib
+        from email.mime.text import MIMEText
+        from email.mime.multipart import MIMEMultipart
+        import random
+        import tkinter as tk
+        import shutil
+        import speedtest
+        import re
+        import pyzipper
+        from zipfile import BadZipFile
+        import signal
+        import nmap
+        from colorama import Fore, Style, init
+        import pygetwindow as gw
+        import pyautogui
+        import msvcrt
+        import keyboard
+        import socket
+        import threading
+        import sys
+        import math
+        from ctypes import cast, POINTER
+        from comtypes import CLSCTX_ALL
+        from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+        from threading import Lock
+        import unicodedata
+        from art import text2art
+        print("OK")
+        sleep(0.3)
+        break
+    except ModuleNotFoundError:
+        sleep(2.4)
+        print("DOWNLOAD FAIL, RETRYING...")
+        sleep(2.4)
+        download_lib()
+
 print("\nCHECKING SYSTEM...")
 sleep(1)
 sy = platform.system()
 if sy == "Windows":
-    build = int(platform.version().split('.')[2])
-    if build < 22000:
+    if 1 == 1:
         print("Windows")
         print("OK")
         sleep(0.3)
@@ -209,48 +251,6 @@ if sy == "Windows":
         print("Python 3.12")
         print("OK...")
         sleep(0.3)
-        print("CHECKING LIBRARY...")
-        while True:
-            try:
-                from moviepy import VideoFileClip
-                import pygame
-                import warnings
-                from datetime import datetime
-                import smtplib
-                from email.mime.text import MIMEText
-                from email.mime.multipart import MIMEMultipart
-                import random
-                import tkinter as tk
-                import shutil
-                import speedtest
-                import re
-                import pyzipper
-                from zipfile import BadZipFile
-                import signal
-                import nmap
-                from colorama import Fore, Style, init
-                import pygetwindow as gw
-                import pyautogui
-                import msvcrt
-                import keyboard
-                import socket
-                import threading
-                import sys
-                import math
-                from ctypes import cast, POINTER
-                from comtypes import CLSCTX_ALL
-                from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
-                from threading import Lock
-                import unicodedata
-                from art import text2art
-                print("OK")
-                sleep(0.3)
-                break
-            except ModuleNotFoundError:
-                sleep(2.4)
-                print("DOWNLOAD FAIL, RETRYING...")
-                sleep(2.4)
-                download_lib()
         print_lock = Lock()
         pyautogui.FAILSAFE = True
         init(autoreset = True)
@@ -1415,16 +1415,14 @@ if sy == "Windows":
                 menu_and_input()
 
         def giao_dien():
-            ve_chu()
-            print(Fore.GREEN + f"Tool by Trần Khánh Toàn - Ver {__version__}")
-            print(Fore.RED + "\nCảnh báo : Các tính năng trong đây bao gồm auto có thể bị mất kiểm soát.")
-            print(Fore.YELLOW + "\nTip : Để thoát chương trình, hãy bấm Ctrl + C. Để thoát chương trình (auto), hãy di chuột lên phía trên cùng góc bên trái để dừng thẳng chương trình.")
-            print("Sau khi đọc xong, nhấn Enter để vào Menu hoặc Ctrl + C để thoát...")
-            key = msvcrt.getch()
-            if key == b'\r':
+            try:
+                ve_chu()
+                print(Fore.GREEN + f"Tool by Trần Khánh Toàn - Ver {__version__}")
+                print(Fore.RED + "\nCảnh báo : Các tính năng trong đây bao gồm auto có thể bị mất kiểm soát.")
+                print(Fore.YELLOW + "\nTip : Để thoát chương trình, hãy bấm Ctrl + C. Để thoát chương trình (auto), hãy di chuột lên phía trên cùng góc bên trái để dừng thẳng chương trình.")
+                input("Sau khi đọc xong, nhấn Enter để vào Menu hoặc Ctrl + C để thoát...")
                 menu_and_input()
-
-            elif key == b'\x03':
+            except KeyboardInterrupt:
                 while True:
                         rem = input("Bạn có muốn gỡ tất cả các gói vừa cài không? (y / n) : ").strip().lower()
                         if rem == "y":
@@ -1437,19 +1435,12 @@ if sy == "Windows":
                         else:
                             print("Vui lòng nhập đúng giá trị chương trình đưa ra.")
                             sleep(0.8)
-            else:
-                giao_dien()
         def main():
-            try:
-                giao_dien()
-            except KeyboardInterrupt:
-                print(Fore.RED + "\nĐã thoát chương trình" + Fore.RESET)
+            giao_dien()
                 
         if __name__ == "__main__":
             main()
-    elif build >= 22000:
-        print(f"\033[0mĐây là Windows 11, dừng chương trình\033[0m")
-        sys.exit(0)
+
 elif sy == "Linux":
     dis = (get_linux_distribution())
     if dis == "Kali GNU/Linux":
@@ -1493,44 +1484,10 @@ elif sy == "Linux":
                 else:
                     print("Vui lòng nhập đúng giá trị chương trình đưa ra")
                     sleep(0.8)
-        while True:
-            try:
-                from moviepy import VideoFileClip
-                import pygame
-                import warnings
-                from datetime import datetime
-                import smtplib
-                from email.mime.text import MIMEText
-                from email.mime.multipart import MIMEMultipart
-                import random
-                import tkinter as tk
-                import shutil
-                import speedtest
-                import re
-                import signal
-                import nmap
-                from colorama import Fore, Style, init
-                import pygetwindow as gw
-                import pyautogui
-                import msvcrt
-                import keyboard
-                import socket
-                import threading
-                import sys
-                import math
-                from ctypes import cast, POINTER
-                from comtypes import CLSCTX_ALL
-                from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
-                from threading import Lock
-                import unicodedata
-                from art import text2art
-                print("OK")
-                print("Chương trình đang được cập nhật , vui lòng chờ phiên bản mới nhất...")
-                sys.exit(0)
-            except ModuleNotFoundError:
-                sleep(2.4)
-                print("DOWNLOAD FAIL, RETRYING...")
-                sleep(2.4)
-                download_lib()
+        print("Chương trình đang được cập nhật , vui lòng chờ phiên bản mới nhất...")
+        rm = input("Bạn có muốn gỡ các thư viện đã cài không? (y / n) : ").strip().lower()
+        if rm == "n":
+            sys.exit(0)
+        os.system("pip uninstall -r requirements.txt -y")
     else:
         print("Chương trình đang cập nhật, vui lòng chờ...")
