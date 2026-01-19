@@ -5,7 +5,7 @@ import os
 import subprocess
 import io
 PROGRESS_EVERY = 1000
-__version__ = "1.0.9"
+__version__ = "1.1.3"
 while True:
     try:
         import requests
@@ -149,7 +149,7 @@ MESSAGES = [
 chu = r"""
                                                                  |                            _
                                                                  |                           ( )
-                                                                 |                           |/                    
+            _         _                        _   _             |                           |/                    
            / \  _   _| |_ ___  _ __ ___   __ _| |_(_) ___        |       _  __ _   _     _     _   _  _   _ 
           / _ \| | | | __/ _ \| '_ ` _ \ / _` | __| |/ __|       |      | |/ /| | | |   / \   | \ | || | | |
          / ___ \ |_| | || (_) | | | | | | (_| | |_| | (__        |      | ' / | |_| |  / _ \  |  \| || |_| |
@@ -186,7 +186,8 @@ items = [
             "13. Nghe file mp3",
             "14. File mp4 -> mp3",
             "15. Giải nén file zip",
-            "16. Chương trình đang được update thêm, khi ra bản mới Tồn Loàn sẽ thông báo...",
+            "16. Tạo QR Code từ website",
+            "17. Chương trình đang được update thêm...",
             "=" * 105,
             "99. Exit"
                 ]
@@ -225,6 +226,7 @@ while True:
         from threading import Lock
         import unicodedata
         from art import text2art
+        import qrcode
         print("OK")
         sleep(0.3)
         break
@@ -358,7 +360,7 @@ if sy == "Windows":
                         for i in range(click):
                             pyautogui.click()
                             print(f"Đã click {i + 1} lần")
-                            sleep(0.001)
+                            sleep(0.1)
                         print(f"Đã click xong {click} lần")
                     except pyautogui.FailSafeException:
                         print(Fore.RED + "Đã dừng chương trình gấp" + Fore.RESET)
@@ -376,7 +378,7 @@ if sy == "Windows":
                         for i in range(click):
                             pyautogui.click(button='right')
                             print(f"Đã click {i + 1} lần")
-                            sleep(0.3)
+                            sleep(0.1)
                         print(f"Đã click xong {click} lần")
                     except pyautogui.FailSafeException:
                         print(Fore.RED + "Đã dừng chương trình gấp" + Fore.RESET)
@@ -1003,7 +1005,7 @@ if sy == "Windows":
                                     os.system(f"pyinstaller --onefile --name {name} ransomware.py")
                                     sleep(1.45)
                                     path = os.path.abspath(f"dist/{name}.exe")
-                                    print(Fore.GREEN + f"Đã tạo xong file {name}.exe, nằm ở {path}" + Fore.RESET)
+                                    print(Fore.GREEN + f"\nĐã tạo xong file {name}.exe, nằm ở {path}" + Fore.RESET)
                                 except Exception as e:
                                     print(Fore.RED + "Đã xảy ra lỗi, vui lòng thử lại" + Fore.RESET)
                                     a = input("Để xem lỗi, hãy nhấn Enter...")
@@ -1246,6 +1248,7 @@ if sy == "Windows":
                 print(Fore.RED + "\nĐã dừng chương trình bởi người dùng." + Fore.RESET)
                 sleep(0.8)
                 menu_and_input()
+
         def extract_zip_interactive():
             cwd = os.getcwd()
             cmd = r'dir /s /b | findstr /i "\.zip$"'
@@ -1310,6 +1313,76 @@ if sy == "Windows":
             except KeyboardInterrupt:
                 print(Fore.RED + "\nĐã dừng chương trình bởi người dùng." + Fore.RESET)
                 sleep(0.8)
+                return
+
+        def check_admin():
+            result = os.system("net session >nul 2>&1")
+            if result == 0:
+                return True
+            else:
+                return False
+        def chuc_nang_16():
+            try:
+                print(Fore.YELLOW + "Lưu ý: Mã QR sẽ được lưu vào cùng thư mục file 'pyauto.py'\n       Nhấn Ctrl + C để thoát chương trình" + Fore.RESET)
+                sleep(1)
+                print("\nPlease wait...")
+                sleep(2)
+                if check_admin() == 1:
+                    print(Fore.GREEN + "Ok" + Fore.RESET)
+                else:
+                    print(Fore.RED + "ERROR" + Fore.RESET, end = " ")
+                    sleep(0.5)
+                    print(Fore.YELLOW + "-> Vui lòng chạy lại chương trình với quyền Administrator." + Fore.RESET, end = "")
+                    sleep(3)
+                    return
+                url = input(Fore.YELLOW + "\nNhập url website: " + Fore.RESET).strip().lower()
+                if (not "http://" in url) and (not "https://" in url):
+                    url = "http://" + url
+                
+                path = input("\nNhập đường dẫn để lưu file QR: ")
+                if "\\" in path:
+                    path = fr"{path}"
+                qr_code = qrcode.make(url)
+                ten = input("\nNhập tên file mã QR muốn lưu (mặc định là 'QR.png'): ").strip()
+                if ten == "":
+                    print("Tên sẽ được đặt theo tên mặc định của chương trình.")
+                    ten = "QR.png"
+                if (chr(92) or '/' or ':' or '*' or '?' or '"' or '<' or '>' or '|') in ten:
+                    print(Fore.YELLOW + "Tên không hợp lệ!!!" + Fore.RESET)
+                    sleep(0.5)
+                    print(Fore.GREEN + "Tên sẽ được đặt theo mặc định" + Fore.RESET)
+                    ten = "QR.png"
+                if not ".png" in ten:
+                    ten = ten + ".png"
+                width = 100
+                info = [
+                    f"URL : {url}",
+                    f"Name : {ten}",
+                    f"Location: {path}"
+                ]
+                print(Fore.BLUE + "\nINFORMATION:\n" + Fore.RESET)
+                print(Fore.BLUE + "="*width + Fore.RESET)
+                for item in info:
+                    line = f"|| {item}"
+                    print(Fore.BLUE + line.ljust(width-2) + "||" + Fore.RESET)
+                print(Fore.BLUE + "="*width + Fore.RESET)
+                print("\n\nVui lòng đợi chương trình tạo mã QR", end = "")
+                sleep(2)
+                for i in range(5):
+                    print(".", end = "")
+                    sleep(0.5)
+                qr_code.save(fr"{path}\\\\{ten}", format = "PNG")
+                print(Fore.GREEN + f"\nĐã tạo xong mã QR và được lưu vào {ten}" + Fore.RESET)
+                sleep(3)
+            except KeyboardInterrupt:
+                print(Fore.RED + "\nĐã dừng chương trình" + Fore.RESET)
+                sleep(0.5)
+                return
+            except Exception as e:
+                print(Fore.RED + f"\nLỗi xảy ra khi tạo mã QR:\n{e}" + Fore.RESET)
+                sleep(5)
+                print(Fore.RED + "\nĐã dừng chương trình" + Fore.RESET)
+                sleep(1)
                 return
                 
         def menu_and_input():
@@ -1388,6 +1461,8 @@ if sy == "Windows":
                             elif chuc_nang == 15:
                                 chuc_nang_15()
                             elif chuc_nang == 16:
+                                chuc_nang_16()
+                            elif chuc_nang == 17:
                                 print(Fore.YELLOW + "Chức năng này không hoạt động." + Fore.RESET)
                                 sleep(5)
                             elif chuc_nang == 99:
