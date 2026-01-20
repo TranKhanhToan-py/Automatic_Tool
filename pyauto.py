@@ -159,7 +159,7 @@ chu = r"""
                                                                  |                        _   
                                                                  |                       ( )
                                                                  |                        \|
-         _____                 _____                             |       _____   ___      _     _   _            
+         _____                 _   _                             |       _____   ___      _     _   _            
         |  ___|   _ _ __   ___| |_(_) ___  _ __                  |      |_   _| / _ \    / \   | \ | |      
         | |_ | | | | '_ \ / __| __| |/ _ \| '_ \                 |        | |  | | | |  / _ \  |  \| |
         |  _|| |_| | | | | (__| |_| | (_) | | | |                |        | |  | |_| | / ___ \ | |\  |
@@ -178,16 +178,15 @@ items = [
             "5. Đo tốc độ mạng",
             "6. Spam Email",
             "7. Quét IP, Port trong mạng LAN (Cần Nmap)",
-            "8. Domain -> IP Address",
-            "9. Lấy các Password WiFi đã kết nối trước đó",
-            "10. Spam SMS (số điện thoại)",
-            "11. Ransomware (troll)",
-            "12. Tạo chữ ASCII art",
-            "13. Nghe file mp3",
-            "14. File mp4 -> mp3",
-            "15. Giải nén file zip",
-            "16. Tạo QR Code từ website",
-            "17. Chương trình đang được update thêm...",
+            "8. Lấy các Password WiFi đã kết nối trước đó",
+            "9. Spam SMS (số điện thoại)",
+            "10. Ransomware (troll)",
+            "11. Tạo chữ ASCII art",
+            "12. Nghe file mp3",
+            "13. File mp4 -> mp3",
+            "14. Giải nén file zip",
+            "15. Tạo QR Code từ website",
+            "16. Chương trình đang được update thêm...",
             "=" * 105,
             "99. Exit"
                 ]
@@ -840,38 +839,6 @@ if sy == "Windows":
                     print(Fore.YELLOW + "Vui lòng nhập đúng giá trị chương trình yêu cầu" + Fore.RESET)
                     sleep(2)
 
-        def resolve_domain(domain):
-            try:
-                print(Fore.CYAN + "Đang giải tên miền", end = "" + Fore.RESET)
-                for i in range(3):
-                    with print_lock:
-                        print(".", end = "", flush = True)
-                        sleep(0.5)
-                ip_address = socket.gethostbyname(domain)
-                return Fore.GREEN + f"\nĐã giải xong : {domain} -> {ip_address}" + Fore.RESET
-                sleep(4)
-            except socket.gaierror as e:
-                return Fore.RED + f"\nLỗi khi giải tên miền thành IP, vui lòng thử lại, kiểm tra xem domain của mình đã đúng chưa." + Fore.RESET
-
-        def chuc_nang_8():
-            print(Fore.YELLOW + "không có cảnh báo, nhấn Ctrl + C để dừng chương trình" + Fore.RESET)
-            sleep(1)
-            while True:
-                try:
-                    domain = input(Fore.YELLOW + "Nhập domain của bạn (VD : google.com, không ghi gì và enter để thoát): " + Fore.RESET).strip().lower()
-                    if domain.startswith("http://") or domain.startswith("https://"):
-                        domain = domain.replace("http://", "").replace("https://", "")
-                    if domain == "":
-                        print(Fore.RED + "\nĐã dừng chương trình bởi người dùng" + Fore.RESET)
-                        sleep(2)
-                        return
-                    print(resolve_domain(domain))
-                    sleep(2)
-                except KeyboardInterrupt:
-                    print(Fore.RED + "\nĐã dừng chương trình bởi người dùng" + Fore.RESET)
-                    sleep(2)
-                    return
-
         def get_saved_wifi_passwords():
             result = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles'], encoding='utf-8')
             profiles = re.findall(r"All User Profile\s*:\s*(.*)", result)
@@ -888,7 +855,7 @@ if sy == "Windows":
                     wifi_list.append((profile, "Error retrieving password"))
             return wifi_list
 
-        def chuc_nang_9():
+        def chuc_nang_8():
             try:
                 print(Fore.RED + "Cảnh báo : Tool này sẽ là tool bất hợp pháp khi chủ mạng chưa cho phép bạn lan truyền mật khẩu WiFi nhưng bạn vẫn cố sử dụng,\n           Vui lòng sử dụng tool với mục đích hợp pháp." + Fore.RESET)
                 sleep(1.3)
@@ -950,7 +917,7 @@ if sy == "Windows":
                 sleep(0.8)
                 return
 
-        def chuc_nang_10():
+        def chuc_nang_9():
             try:
                 print(Fore.RED + "Cảnh báo: Tool này là tool bất hợp pháp, vui lòng sử dụng đúng mục đích\n           Tool này có thể bị mất kiểm soát, nếu muốn dừng chương trình thì hãy đợi có chữ THÀNH CÔNG và nhấn Ctrl + C")
                 sleep(1.2)
@@ -978,12 +945,12 @@ if sy == "Windows":
                 sleep(2)
                 return
 
-        def chuc_nang_11():
+        def chuc_nang_10():
             try:
-                print(Fore.RED + "CẢNH CÁO ĐẶC BIỆT : ĐỂ TẮT CHƯƠNG TRÌNH VUI LÒNG NHẤN WINDOWS + SPACE (DẤU CÁCH)\n                    KHI NHẤN ALT + F4 THÌ CHƯƠNG TRÌNH SẼ BỊ GIẾT\n                    ĐỂ THOÁT CHỨC NĂNG KHI NHẬP INPUT THÌ HÃY NHẤN CTRL + C VÀ NHẤN ENTER" + Fore.RESET)
+                print(Fore.RED + "Cảnh cáo: để tắt chương trình vui lòng nhấn windows + space (dấu cách)\n                    khi nhấn alt + f4 thì chương trình sẽ bị giết\n                    để thoát chức năng khi nhập input thì hãy nhấn ctrl + c và nhấn enter" + Fore.RESET)
                 sleep(1.2)
                 while True:
-                    xn = input(Fore.YELLOW + "Bạn muốn test ransomware trên máy này hay tạo file .exe? (nhập l để thực hiện trên máy, nhập e để tạo file .exe, 0 để thoát) : " + Fore.RESET).strip().lower()
+                    xn = input(Fore.YELLOW + "Bạn muốn test ransomware trên máy này hay tạo file .exe? (nhập l để thực hiện trên máy, e để tạo file .exe, 0 để thoát) : " + Fore.RESET).strip().lower()
                     if xn == "0":
                         print(Fore.RED + "Đã thoát chương trình do giá trị nhập là '0'" + Fore.RESET)
                         sleep(1.8)
@@ -1047,7 +1014,7 @@ if sy == "Windows":
             no_tone = no_tone.replace('đ', 'd').replace('Đ', 'D')
             return no_tone
 
-        def chuc_nang_12():
+        def chuc_nang_11():
             try:
                 print(Fore.YELLOW + "Lưu ý : Vì không hỗ trợ dấu nên khi bạn ghi từ nào có dấu thì chương trình sẽ đưa ra chữ Ascii không dấu" + Fore.RESET)
                 sleep(1)
@@ -1070,7 +1037,7 @@ if sy == "Windows":
                 sleep(2)
                 return
 
-        def chuc_nang_13():
+        def chuc_nang_12():
             print(Fore.RED + "Cảnh báo : File audio của bạn bắt buộc phải không có dấu và không có khoảng cách\n           Nhấn Ctrl + C để dừng")
             warnings.filterwarnings("ignore", category=UserWarning)
             os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
@@ -1129,7 +1096,7 @@ if sy == "Windows":
                 sleep(2)
                 return
 
-        def chuc_nang_14():
+        def chuc_nang_13():
             print(Fore.RED + "Cảnh báo : File video của bạn bắt buộc phải không có dấu và không có khoảng cách\n           Nhấn Ctrl + C để dừng")
             sleep(0.8)
             while True:
@@ -1272,23 +1239,23 @@ if sy == "Windows":
             ok, err = try_extract_all(zippath, outdir, pwd_bytes=None)
             if ok:
                 sleep(3)
-                print(Fore.GREEN + f"Giải nén thành công vào {outdir}." + Fore.RESET)
+                print(Fore.GREEN + f"\nGiải nén thành công vào {outdir}." + Fore.RESET)
                 sleep(0.8)
-                chuc_nang_15()
+                chuc_nang_14()
             if not pw_file:
-                print(Fore.YELLOW + f"Giải nén thất bại không mật khẩu. Lỗi: {err}" + Fore.RESET)
+                print(Fore.RED + f"\nGiải nén thất bại không mật khẩu. Lỗi: {err}" + Fore.RESET)
                 sleep(2)
-                chuc_nang_15()
+                chuc_nang_14()
             sleep(2)
             cr = input(Fore.YELLOW + "\nFile đã được mã hóa, bạn có muốn crack nó không? (y / n) : " + Fore.RESET).strip().lower()
             if cr == "n":
-                print(Fore.GREEN + "Lựa chọn : Không" + Fore.RESET)
+                print(Fore.YEllOW + "\n-> Lựa chọn : Không" + Fore.RESET)
                 sleep(0.8)
-                print(Fore.YELLOW + "Lỗi : Không thể giải nén file vì đã được mã hóa." + Fore.RESET)
+                print(Fore.YELLOW + "\nLỗi : Không thể giải nén file vì đã được mã hóa." + Fore.RESET)
                 sleep(1)
-                print(Fore.RED + "Đã thoát chương trình." + Fore.RESET)
+                print(Fore.RED + "\nĐã thoát chương trình." + Fore.RESET)
                 sleep(0.8)
-                chuc_nang_15()
+                chuc_nang_14()
             gen = read_pw_file_generator(pw_file)
             for idx, pw in enumerate(gen, start=1):
                 try:
@@ -1300,11 +1267,11 @@ if sy == "Windows":
                 ok, err = try_extract_all(zippath, outdir, pwd_bytes=pwd_bytes)
                 if ok:
                     print(Fore.GREEN + f"\nGiải nén thành công. Mật khẩu hợp lệ: {pw}" + Fore.RESET)
-                    chuc_nang_15()
-            print("Không tìm được mật khẩu trong file mật khẩu đã cung cấp.")
-            chuc_nang_15()
+                    chuc_nang_14()
+            print(Fore.RED + "\nKhông tìm được mật khẩu trong file mật khẩu đã cung cấp." + Fore.RESET)
+            chuc_nang_14()
 
-        def chuc_nang_15():
+        def chuc_nang_14():
             print(Fore.RED + "Cảnh báo : File nén của bạn bắt buộc phải không có dấu và không có khoảng cách\n           Nhấn Ctrl + C để dừng" + Fore.RESET)
             sleep(0.8)
             try:
@@ -1321,7 +1288,8 @@ if sy == "Windows":
                 return True
             else:
                 return False
-        def chuc_nang_16():
+
+        def chuc_nang_15():
             try:
                 print(Fore.YELLOW + "Lưu ý: Mã QR sẽ được lưu vào cùng thư mục file 'pyauto.py'\n       Nhấn Ctrl + C để thoát chương trình" + Fore.RESET)
                 sleep(1)
@@ -1338,7 +1306,6 @@ if sy == "Windows":
                 url = input(Fore.YELLOW + "\nNhập url website: " + Fore.RESET).strip().lower()
                 if (not "http://" in url) and (not "https://" in url):
                     url = "http://" + url
-                
                 path = input("\nNhập đường dẫn để lưu file QR: ")
                 if "\\" in path:
                     path = fr"{path}"
@@ -1461,10 +1428,8 @@ if sy == "Windows":
                             elif chuc_nang == 15:
                                 chuc_nang_15()
                             elif chuc_nang == 16:
-                                chuc_nang_16()
-                            elif chuc_nang == 17:
                                 print(Fore.YELLOW + "Chức năng này không hoạt động." + Fore.RESET)
-                                sleep(5)
+                                sleep(2)
                             elif chuc_nang == 99:
                                 while True:
                                     rem = input("Bạn có muốn gỡ tất cả các gói vừa cài không? (y / n) : ").strip().lower()
