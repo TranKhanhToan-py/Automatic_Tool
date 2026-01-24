@@ -1,10 +1,26 @@
-#BAO TRI CHUONG TRINH : YEU CAU QUYEN TRUY CAP KHI CHAY CHUONG TRINH
 import sys
 import platform
 from time import sleep
 import os
 import subprocess
 import io
+
+def check_admin():
+    result = os.system("net session >nul 2>&1")
+    if result == 0:
+        return True
+    else:
+        return False
+print("CHECKING...")
+if check_admin() == 1:
+    print("Ok")
+else:
+    print("ERROR", end = " ")
+    sleep(0.5)
+    print("-> Vui lòng chạy lại chương trình với quyền Administrator.")
+    sleep(3)
+    return
+
 PROGRESS_EVERY = 1000
 __version__ = "1.1.4"
 while True:
@@ -1324,27 +1340,12 @@ if sy == "Windows":
                 sleep(0.8)
                 return
 
-        def check_admin():
-            result = os.system("net session >nul 2>&1")
-            if result == 0:
-                return True
-            else:
-                return False
-
         def chuc_nang_15():
             try:
                 print(Fore.YELLOW + "Lưu ý: Mã QR sẽ được lưu vào cùng thư mục file 'pyauto.py'\n       Nhấn Ctrl + C để thoát chương trình" + Fore.RESET)
                 sleep(1)
                 print("\nPlease wait...")
                 sleep(2)
-                if check_admin() == 1:
-                    print(Fore.GREEN + "Ok" + Fore.RESET)
-                else:
-                    print(Fore.RED + "ERROR" + Fore.RESET, end = " ")
-                    sleep(0.5)
-                    print(Fore.YELLOW + "-> Vui lòng chạy lại chương trình với quyền Administrator." + Fore.RESET, end = "")
-                    sleep(3)
-                    return
                 url = input(Fore.YELLOW + "\nNhập url website: " + Fore.RESET).strip().lower()
                 if (not "http://" in url) and (not "https://" in url):
                     url = "http://" + url
