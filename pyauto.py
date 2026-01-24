@@ -1,3 +1,4 @@
+#BAO TRI CHUONG TRINH : YEU CAU QUYEN TRUY CAP KHI CHAY CHUONG TRINH
 import sys
 import platform
 from time import sleep
@@ -5,7 +6,7 @@ import os
 import subprocess
 import io
 PROGRESS_EVERY = 1000
-__version__ = "1.1.3"
+__version__ = "1.1.4"
 while True:
     try:
         import requests
@@ -76,6 +77,29 @@ def check_in_venv():
     return (hasattr(sys, 'real_prefix') or 
             (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
 
+def list_drives():
+    system = platform.system()
+    try:
+        if system == "Windows":
+            if hasattr(os, "listdrives"):
+                return os.listdrives()
+            else:
+                from ctypes import windll
+                drives = []
+                bitmask = windll.kernel32.GetLogicalDrives()
+                for letter in string.ascii_uppercase:
+                    if bitmask & 1:
+                        drives.append(f"{letter}:\\")
+                    bitmask >>= 1
+                return drives
+        elif system == "Linux" or system == "Darwin":
+            return [p.device for p in psutil.disk_partitions(all=False)]
+        else:
+            raise NotImplementedError(f"Unsupported OS: {system}")
+    except Exception as e:
+        print(f"Error listing drives: {e}")
+        return []
+
 def download_lib():
     os.system("pip install -r requirements.txt")
 
@@ -102,12 +126,39 @@ def find_tool(t):
             print(Fore.YELLOW + f"Đang tìm kiếm {t} trong PATH" + Fore.RESET)
             sleep(2)
             if path:
-                return path
-            print(Fore.YELLOW + f"Không tìm thấy {t} trong PATH, đang quét toàn bộ ổ C, hãy kiên nhẫn... " + Fore.RESET)
-            for root, dirs, files in os.walk("C:\\"):
-                if "nmap.exe" in files:
-                    return os.path.join(root, "nmap.exe")
-            return None
+                print(Fore.GREEN + "Ok" + Fore.RESET)
+            print(Fore.YELLOW + f"Không tìm thấy {t} trong PATH" + Fore.RESET)
+            sleep(0.4)
+            print(Fore.YELLOW + "Đang quét các ổ đĩa này trong máy tính để kiểm tra..." + Fore.RESET)
+            sleep(1)
+            o_dia = list_drives()
+            for i in o_dia:
+                print(i)
+            for i in o_dia:
+                for root, dirs, files in os.walk(i):
+                    if "nmap.exe" in files:
+                        path1 = root
+                        print(Fore.GREEN + f"Đã tìm thấy nmap ở {path1}" + Fore.RESET)
+                        sleep(0.2)
+                        add = input("Nmap chưa được thêm vào PATH, bạn có muốn thêm vào không? (y / n): ").strip().lower()
+                        if add == "y":
+                            new_path = rf"{path1}"
+                            try:
+                                if new_path not in os.environ["PATH"]:
+                                    os.environ["PATH"] += os.pathsep + new_path
+                                print(Fore.GREEN + "Thêm tạm Nmap vào PATH thành công!" + Fore.RESET)
+                                sleep(1.2)
+                                return
+                            except Exception as e:
+                                print(Fore.RED + f"Lỗi xảy ra khi thêm PATH:\n{e}")
+                                menu_and_input()
+                        if add == "n":
+                            print(Fore.RED + "Đã thoát chương trình do chưa có Nmap trong PATH." + Fore.RESET)
+                            sleep(2)
+                            menu_and_input()
+            print(Fore.YELLOW + "Không có Nmap trong máy tính" + Fore.RESET)
+            sleep(2)
+            menu_and_input()
     except Exception as e:
         return Fore.RED + f"Lỗi khi tìm kiếm công cụ {t}: {e}" + Fore.RESET
     except KeyboardInterrupt:
@@ -226,6 +277,7 @@ while True:
         import unicodedata
         from art import text2art
         import qrcode
+        import string
         print("OK")
         sleep(0.3)
         break
@@ -750,7 +802,7 @@ if sy == "Windows":
 
             online_hosts = []
             print(Fore.GREEN + "Các host đang ONLINE:" + Fore.RESET)
-            for idx, host in enumerate(nm.all_hosts(), 1):
+            for idx, host in enumerate(nm.all_hosts(), 0):
                 state = nm[host].state()
                 if state == "up":
                     print({idx}, {host}, ":", Fore.GREEN + "OPEN" + Fore.GREEN)
@@ -774,16 +826,7 @@ if sy == "Windows":
         def chuc_nang_7():
             print("CHECKING NMAP...")
             sleep(1.3)
-            nmap = find_tool("nmap")
-            if nmap:
-                print("Máy có Nmap, đang tải chương trình...")
-                sleep(0.8)
-            else:
-                print("Máy không có Nmap, vui lòng cài Nmap và chạy lại chương trình.")
-                sleep(0.4)
-                print(Fore.RED + "Đã dừng chương trình do không có Nmap" + Fore.RESET)
-                sleep(1.7)
-                return
+            find_tool("nmap")
             print(Fore.RED + "Cảnh báo : Tool này là tool bất hợp pháp, có thể gây ra các hậu quả không lường trước nếu không có sự đồng ý của chủ sở hữu mạng,\n           vui lòng sử dụng tool này khi được sự cho phép của bố mẹ hoặc chủ mạng." + Fore.RESET)
             sleep(1.5)
             while True:
@@ -797,9 +840,9 @@ if sy == "Windows":
                         else:
                             while True:
                                 choice = input(
-                                    Fore.BLUE + "\nNhập số thứ tự IP bạn muốn quét port (0 để thoát): " + Fore.RESET
+                                    Fore.BLUE + "\nNhập số thứ tự IP bạn muốn quét port (-1 để thoát): " + Fore.RESET
                                 ).strip()
-                                if choice == "0":
+                                if choice == "-1":
                                     print(Fore.RED + "Đã dừng chương trình bởi người dùng" + Fore.RESET)
                                     sleep(2)
                                     return
@@ -830,7 +873,6 @@ if sy == "Windows":
                     except KeyboardInterrupt:
                         print(Fore.RED + "Đã dừng chương trình bởi người dùng." + Fore.RESET)
                         sleep(2)
-
                 elif ok == "n":
                     print(Fore.RED +"Đã thoát chương trình do giá trị nhập bằng 'n'" + Fore.RESET)
                     sleep(2.4)
