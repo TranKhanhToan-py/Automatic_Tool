@@ -18,8 +18,7 @@ else:
     print("ERROR", end = " ")
     sleep(0.5)
     print("-> Vui lòng chạy lại chương trình với quyền Administrator.")
-    sleep(3)
-    return
+    sys.exit(0)
 
 PROGRESS_EVERY = 1000
 __version__ = "1.1.4"
@@ -284,7 +283,6 @@ while True:
         import keyboard
         import socket
         import threading
-        import sys
         import math
         from ctypes import cast, POINTER
         from comtypes import CLSCTX_ALL
@@ -1507,7 +1505,7 @@ if sy == "Windows":
                 menu_and_input()
             except KeyboardInterrupt:
                 while True:
-                        rem = input("Bạn có muốn gỡ tất cả các gói vừa cài không? (y / n) : ").strip().lower()
+                        rem = input("\nBạn có muốn gỡ tất cả các gói vừa cài không? (y / n) : ").strip().lower()
                         if rem == "y":
                             print("CHECKING LIBRARY...")
                             sleep(2)
