@@ -11,6 +11,7 @@ def check_admin():
         return True
     else:
         return False
+sleep(1.4)
 print("CHECKING...")
 if check_admin() == 1:
     print("Ok")
@@ -21,7 +22,7 @@ else:
     sys.exit(0)
 
 PROGRESS_EVERY = 1000
-__version__ = "1.1.4"
+__version__ = "1.1.6"
 while True:
     try:
         import requests
@@ -252,7 +253,8 @@ items = [
             "13. File mp4 -> mp3",
             "14. Giải nén file zip",
             "15. Tạo QR Code từ website",
-            "16. Chương trình đang được update thêm...",
+            "16. Điều khiển",
+            "17. Chương trình đang được update thêm...",
             "=" * 105,
             "99. Exit"
                 ]
@@ -1393,6 +1395,61 @@ if sy == "Windows":
                 sleep(1)
                 return
                 
+        def chuc_nang_16():
+            try:
+                while True:
+                    print(Fore.CYAN + "\n======CÁC THAO TÁC MÁY TÍNH======" + Fore.RESET)
+                    print(Fore.CYAN + "| 0. Exit                       |" + Fore.RESET)
+                    print(Fore.CYAN + "=================================" + Fore.RESET)
+                    print(Fore.CYAN + "| 1. Shutdown                   |" + Fore.RESET)
+                    print(Fore.CYAN + "| 2. Restart                    |" + Fore.RESET)
+                    print(Fore.CYAN + "| 3. Sign out                   |" + Fore.RESET)
+                    print(Fore.CYAN + "| 4. Sleep                      |" + Fore.RESET)
+                    print(Fore.CYAN + "| 5. Switch User                |" + Fore.RESET)
+                    print(Fore.CYAN + "| 6. Lock Screen                |" + Fore.RESET)
+                    print(Fore.CYAN + "| To be continue...             |" + Fore.RESET)
+                    print(Fore.CYAN + "=================================\n" + Fore.RESET)
+                    choice = input(Fore.CYAN + "Vui lòng chọn thao tác (số hoặc 2 chữ cái đầu của mỗi thao tác) : " + Fore.RESET).strip().lower()
+                    try:
+                        if choice == "0" or choice == "ex":
+                            print(Fore.RED + "Đã thoát chương trình" + Fore.RESET)
+                            sleep(2)
+                            return
+                        if choice == "1" or choice == "sh":
+                            print(Fore.YELLOW + "Nhấn Ctrl + C để hủy")
+                            countdown(5)
+                            os.system("shutdown /s /t 0")
+                        elif choice == "2" or choice == "re":
+                            print(Fore.YELLOW + "Nhấn Ctrl + C để hủy")
+                            countdown(5)
+                            os.system("shutdown /r /t 0")                    
+                        elif choice == "3" or choice == "si":
+                            print(Fore.YELLOW + "Nhấn Ctrl + C để hủy")
+                            countdown(5)
+                            os.system("shutdown /l")
+                        elif choice == "4" or choice == "sl":
+                            print(Fore.YELLOW + "Nhấn Ctrl + C để hủy")
+                            countdown(5)
+                            os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
+                        elif choice == "5" or choice == "sw":
+                            print(Fore.YELLOW + "Nhấn Ctrl + C để hủy")
+                            countdown(5)                        
+                            os.system("tsdiscon")
+                        elif choice == "6" or choice == "lo":
+                            print(Fore.YELLOW + "Nhấn Ctrl + C để hủy")
+                            countdown(5)                        
+                            os.system("rundll32.exe user32.dll,LockWorkStation")
+                        else:
+                            print(Fore.YELLOW + "\nVui lòng nhập đúng thao tác trong menu." + Fore.RESET)
+                            sleep(2)
+                            os.system("cls")
+                    except KeyboardInterrupt:
+                        os.system("cls")
+            except KeyboardInterrupt:
+                print(Fore.RED + "\nĐã thoát chương trình" + Fore.RESET)
+                sleep(2)
+                return
+
         def menu_and_input():
             try:
                 da_chay_chuc_nang_0 = False
@@ -1469,6 +1526,8 @@ if sy == "Windows":
                             elif chuc_nang == 15:
                                 chuc_nang_15()
                             elif chuc_nang == 16:
+                                chuc_nang_16()
+                            elif chuc_nang == 17:
                                 print(Fore.YELLOW + "Chức năng này không hoạt động." + Fore.RESET)
                                 sleep(2)
                             elif chuc_nang == 99:
