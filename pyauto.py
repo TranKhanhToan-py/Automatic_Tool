@@ -303,7 +303,7 @@ items = [
             "=" * 105,
             "99. Exit"
                 ]
-check_library()
+
 print("\nCHECKING SYSTEM...")
 sleep(1)
 sy = platform.system()
@@ -321,10 +321,10 @@ if sy == "Windows":
         print("Python 3.12")
         print("OK...")
         sleep(0.3)
+        check_library()
         print_lock = Lock()
         pyautogui.FAILSAFE = True
         init(autoreset = True)
-
         def find_app(app):
             windows = gw.getWindowsWithTitle(app)
             return windows
@@ -1599,7 +1599,7 @@ elif sy == "Linux":
         print("OK...")
         sleep(0.3)
         print("CHECKING LIBRARY AND MODULES...")
-        sleep(1)
+        sleep(0.3)
         venv_available = check_venv_module()
         in_venv = check_in_venv()
         print("Trạng thái kiểm tra Python venv:")
