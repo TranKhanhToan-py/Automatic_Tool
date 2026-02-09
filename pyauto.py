@@ -1609,14 +1609,9 @@ elif sy == "Linux":
                 dow = input("Chương trình của bạn không có venv, bạn có muốn chương trình cài venv không? (y / n) : ").strip().lower()
                 if dow == "y":
                     os.system("sudo apt install python3-venv")
-                    print("\nĐã cài xong venv, đang chuẩn bị tạo môi trường ảo...")
-                    sleep(0.6)
                     os.system("python3 -m venv venv")
-                    print("Đã tạo xong môi trường ảo, đang kích hoạt môi trường ảo...")
-                    sleep(0.6)
-                    os.system("venv/bin/python pyauto.py")
-                    print("Đã kích hoạt venv, kiểm tra thư viện...")
-                    sleep(1)
+                    os.system("source venv/bin/activate")
+                    print("DONE")
                     break
                 elif dow == "n":
                     print("Vui lòng cài venv để chạy chương trình. TẠM BIỆT!")
