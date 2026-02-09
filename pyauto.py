@@ -142,14 +142,10 @@ def check_library():
             from colorama import Fore, Style, init
             import pygetwindow as gw
             import pyautogui
-            import msvcrt
             import keyboard
             import socket
             import threading
             import math
-            from ctypes import cast, POINTER
-            from comtypes import CLSCTX_ALL
-            from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
             from threading import Lock
             import unicodedata
             from art import text2art
@@ -309,6 +305,10 @@ sleep(1)
 sy = platform.system()
 if sy == "Windows":
     if 1 == 1:
+        from ctypes import cast, POINTER
+        from comtypes import CLSCTX_ALL
+        from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+        import msvcrt
         print("Windows")
         print("OK")
         sleep(0.3)
@@ -1628,4 +1628,3 @@ elif sy == "Linux":
         os.system("pip uninstall -r requirements.txt -y")
     else:
         print("Chương trình đang cập nhật, vui lòng chờ...")
-
