@@ -119,6 +119,51 @@ def list_drives():
 def download_lib():
     os.system("pip install -r requirements.txt")
 
+def check_library():
+    print("CHECKING LIBRARY...")
+    while True:
+        try:
+            from moviepy import VideoFileClip
+            import pygame
+            import warnings
+            from datetime import datetime
+            import smtplib
+            from email.mime.text import MIMEText
+            from email.mime.multipart import MIMEMultipart
+            import random
+            import tkinter as tk
+            import shutil
+            import speedtest
+            import re
+            import pyzipper
+            from zipfile import BadZipFile
+            import signal
+            import nmap
+            from colorama import Fore, Style, init
+            import pygetwindow as gw
+            import pyautogui
+            import msvcrt
+            import keyboard
+            import socket
+            import threading
+            import math
+            from ctypes import cast, POINTER
+            from comtypes import CLSCTX_ALL
+            from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+            from threading import Lock
+            import unicodedata
+            from art import text2art
+            import qrcode
+            import string
+            print("OK")
+            sleep(0.3)
+            break
+        except ModuleNotFoundError:
+            sleep(2.4)
+            print("DOWNLOAD FAIL, RETRYING...")
+            sleep(2.4)
+            download_lib()
+
 def get_linux_distribution():
     try:
         distro = platform.linux_distribution()
@@ -258,51 +303,7 @@ items = [
             "=" * 105,
             "99. Exit"
                 ]
-
-print("CHECKING LIBRARY...")
-while True:
-    try:
-        from moviepy import VideoFileClip
-        import pygame
-        import warnings
-        from datetime import datetime
-        import smtplib
-        from email.mime.text import MIMEText
-        from email.mime.multipart import MIMEMultipart
-        import random
-        import tkinter as tk
-        import shutil
-        import speedtest
-        import re
-        import pyzipper
-        from zipfile import BadZipFile
-        import signal
-        import nmap
-        from colorama import Fore, Style, init
-        import pygetwindow as gw
-        import pyautogui
-        import msvcrt
-        import keyboard
-        import socket
-        import threading
-        import math
-        from ctypes import cast, POINTER
-        from comtypes import CLSCTX_ALL
-        from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
-        from threading import Lock
-        import unicodedata
-        from art import text2art
-        import qrcode
-        import string
-        print("OK")
-        sleep(0.3)
-        break
-    except ModuleNotFoundError:
-        sleep(2.4)
-        print("DOWNLOAD FAIL, RETRYING...")
-        sleep(2.4)
-        download_lib()
-
+check_library()
 print("\nCHECKING SYSTEM...")
 sleep(1)
 sy = platform.system()
@@ -1619,6 +1620,7 @@ elif sy == "Linux":
                 else:
                     print("Vui lòng nhập đúng giá trị chương trình đưa ra")
                     sleep(0.8)
+        check_library()
         print("Chương trình đang được cập nhật , vui lòng chờ phiên bản mới nhất...")
         rm = input("Bạn có muốn gỡ các thư viện đã cài không? (y / n) : ").strip().lower()
         if rm == "n":
