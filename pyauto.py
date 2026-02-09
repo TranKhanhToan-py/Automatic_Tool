@@ -6,11 +6,11 @@ import subprocess
 import io
 
 def check_admin():
-    result = os.system("net session >nul 2>&1")
-    if result == 0:
-        return True
+    if platform.system() == "Windows":
+        return os.system("net session >nul 2>&1") == 0
     else:
-        return False
+        return os.geteuid() == 0
+
 sleep(1.4)
 print("CHECKING...")
 if check_admin() == 1:
