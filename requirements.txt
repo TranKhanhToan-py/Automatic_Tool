@@ -1,6 +1,7 @@
 moviepy
 pygame
 speedtest-cli
+pyzipper
 python-nmap
 colorama
 pygetwindow
@@ -8,5 +9,5 @@ pyautogui
 keyboard
 comtypes
 pycaw
-pyinstaller
 art
+qrcode
