@@ -22,7 +22,7 @@ else:
     sys.exit(0)
 
 PROGRESS_EVERY = 1000
-__version__ = "1.1.6"
+__version__ = "1.1.7"
 while True:
     try:
         import requests
@@ -1628,3 +1628,4 @@ elif sy == "Linux":
         os.system("pip uninstall -r requirements.txt -y")
     else:
         print("Chương trình đang cập nhật, vui lòng chờ...")
+
