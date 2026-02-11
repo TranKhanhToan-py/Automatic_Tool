@@ -70,7 +70,6 @@ def check_and_update():
     except Exception as e:
         print("Lỗi khi kiểm tra cập nhật:", e)
         sleep(2)
-##################################################################check_and_update()
 
 def list_drives():
     try:
@@ -85,6 +84,8 @@ def list_drives():
                     drives.append(f"{letter}:\\")
                 bitmask >>= 1
             return drives
+    except Exception as e:
+        print(f"Error : {e}")
 
 def download_lib():
     os.system("pip install -r requirements.txt")
@@ -96,8 +97,7 @@ def check_library():
             from moviepy import VideoFileClip
             import pygame
             import warnings
-            from datetime
-            import datetime
+            from datetime import datetime
             import smtplib
             from email.mime.text import MIMEText
             from email.mime.multipart import MIMEMultipart
@@ -295,6 +295,38 @@ print("Python 3.12")
 print("OK...")
 sleep(0.3)
 check_library()
+from moviepy import VideoFileClip
+import pygame
+import warnings
+from datetime import datetime
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import random
+import tkinter as tk
+import shutil
+import speedtest
+import re
+import pyzipper
+from zipfile import BadZipFile
+import signal
+import nmap
+from colorama import Fore, Style, init
+import pygetwindow as gw
+import pyautogui
+import msvcrt
+import keyboard
+import socket
+import threading
+import math
+from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+from ctypes import cast, POINTER
+from comtypes import CLSCTX_ALL
+from threading import Lock
+import unicodedata
+from art import text2art 
+import qrcode 
+import string
 print_lock = Lock()
 pyautogui.FAILSAFE = True
 init(autoreset = True)
@@ -492,7 +524,7 @@ def chuc_nang_4():
         print(Fore.RED + "Cảnh Báo: Nhấn Ctrl + C để thoát chương trình\nNhập 0 vào các input để thoát chương trình."+ Fore.RESET)
         sleep(0.8)
         devices = AudioUtilities.GetSpeakers()
-        interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+        interface = devices._dev.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
         volume = cast(interface, POINTER(IAudioEndpointVolume))
         while True:
             current = volume.GetMasterVolumeLevelScalar()
@@ -745,7 +777,6 @@ def chuc_nang_6(TARGET, targ):
             account = random.choice(ACCOUNTS)
             message = random.choice(MESSAGES)
             r_c = random.randint(1000, 99999)
-
             send_email(
                 account,
                 TARGET,
