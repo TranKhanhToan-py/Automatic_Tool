@@ -294,6 +294,8 @@ if not version == "3.12":
 print("Python 3.12")
 print("OK...")
 sleep(0.3)
+check_and_update()
+sleep(0.3)
 check_library()
 from moviepy import VideoFileClip
 import pygame
@@ -685,6 +687,8 @@ def cn():
             except Exception:
                 print(Fore.RED + "Lỗi khi ghi file." + Fore.RESET)
         elif log != "n":
+            pass
+        else:
             print(Fore.RED + "Giá trị nhập không hợp lệ." + Fore.RESET)
     except subprocess.CalledProcessError:
         print(Fore.YELLOW + "\nKhông có kết nối mạng" + Fore.RESET)
