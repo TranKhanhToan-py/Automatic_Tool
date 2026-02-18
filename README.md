@@ -1,8 +1,7 @@
 # Automatic Tool
 
 - Dự án đa số chạy bằng pyautogui và có nhiều chức năng (gồm hợp pháp và phạm pháp)
-- Môi trường hỗ trợ : + Windows (10)
-                      + Linux (đang phát triển)
+- Môi trường hỗ trợ : Windows (10)
 
 ---
 
